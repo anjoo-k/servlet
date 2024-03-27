@@ -45,7 +45,7 @@ public class MemberDao {
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
 			
-			
+			rset = pstmt.executeQuery(); // 조회 결과가 있다면 한행 반환 | 없다면 반환x
 			
 			if(rset.next()) {
 				m = new Member(
@@ -63,9 +63,6 @@ public class MemberDao {
 						);
 			}
 			
-			rset = pstmt.executeQuery(); // 조회 결과가 있다면 한행 반환 | 없다면 반환x
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -74,6 +71,37 @@ public class MemberDao {
 		}
 		
 		return m;
+	}
+
+	public int insertMember(Connection conn, Member m) {
+		// insert문 => 처리된 행 수 => 트랜잭션 처리
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getUserID());
+			pstmt.setString(2, m.getUserPwd());
+			pstmt.setString(3, m.getUserName());
+			pstmt.setString(4, m.getPhone());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getAddress());
+			pstmt.setString(7, m.getInterest());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+
 	}
 
 }

@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.member.model.vo.Member"%>
 <%
 	String contextPath = request.getContextPath();
+
+    Member loginUser = (Member)session.getAttribute("loginUser");
+    // 로그인 시도 전 menunar.jsp로딩 시 : null
+    // 로그인 성공 후 menubar.jsp로딩 시 : 로그인 성공한 회원의 정보
+    
+    String alertMsg = (String)session.getAttribute("alertMsg");
+    // 서비스 요청 전 : null
+    // 서비스 요청 후 : alert로 띄워줄 메세지 문구 in
 %>
 <!DOCTYPE html>
 <html>
@@ -42,14 +50,25 @@
         height: 100%;
         display: block;
     }
+    div div a{
+    	color: black;
+        font-weight: 600;
+    }
 </style>
 </head>
 <body>
+	<% if(alertMsg != null) { %>
+		<script>
+		alert("<%=alertMsg%>");
+		<% session.removeAttribute("alertMsg");%>
+		<% } %>
+		</script>
 
 	<h1 align="center">Welcome KH World</h1>
     <div class="login-area" method="POST">
+        <% if(loginUser == null) { %>
          <!-- 로그인 전  -->
-    <form action="<%=contextPath%>/Login.me">
+    <form action="<%=contextPath%>/login.me">
         <table>
             <tr>
                 <th>아이디</th>
@@ -62,20 +81,34 @@
             <tr>
                 <th colspan="2">
                     <input type="submit" value="로그인">
-                    <input type="button" value="회원가입">
+                    <input type="button" value="회원가입" onclick="enrollPage()">
                 </th>
             </tr>
         </table>
+        <script>
+            // 회원가입 페이지를 요청
+            // 버튼 써보기 연습
+            function enrollPage(){
+                // location.href = "<%=contextPath%>/views/member/memberEnrollForm.jsp";
+                // 위 방식대로 웹 애플리케이션의 디렉토리 구조가 url에 노출되면 보안에 취약
+                
+				 location.href =  "<%=contextPath%>/enrollForm.me";
+				// 단순한 페이지 요청도 servlet을 거쳐갈 것(즉, url에는 서블릿 맵핑값만 나타나도록 하자)
+            	// 웹페이지에서 servlet 요청
+            }
+        </script>
 
     </form>
+    <% } else {%>
     <!-- 로그인 후 -->
-    <!-- <div>
-        <b> 홍길동님</b>의 방문을 환역합니다<br>
+    <div>
+        <b> <%=loginUser.getUserName()%>님</b>의 방문을 환역합니다<br>
         <div align="center">
             <a href="">마이페이지</a>
-            <a href="">로그아웃</a>
+            <a href="<%=contextPath%>/logout.me">로그아웃</a>
         </div>
-    </div> -->
+    </div>
+    <% } %>
 
     </div>
     <!-- float가 뒤에 오는 내용들이 겹쳐질 수 있으므로 clear한번 해줘야 -->
