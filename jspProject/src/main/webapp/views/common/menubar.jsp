@@ -35,6 +35,9 @@
     .login-area > *{
         float: right;
     }
+    .login-area a{
+    	color: black;    
+    }
     .nav-area{background: black;}
     .menu{
         display: table-cell;
@@ -50,10 +53,7 @@
         height: 100%;
         display: block;
     }
-    div div a{
-    	color: black;
-        font-weight: 600;
-    }
+
 </style>
 </head>
 <body>
@@ -104,7 +104,7 @@
     <div>
         <b> <%=loginUser.getUserName()%>님</b>의 방문을 환역합니다<br>
         <div align="center">
-            <a href="">마이페이지</a>
+            <a href="<%=contextPath%>/myPage.me">마이페이지</a>
             <a href="<%=contextPath%>/logout.me">로그아웃</a>
         </div>
     </div>
@@ -115,8 +115,8 @@
     <br clear="both"><br>
 
     <div class="nav-area" align="center">
-        <div class="menu"><a href="">HOME</a></div>
-        <div class="menu"><a href="">공지사항</a></div>
+        <div class="menu"><a href="<%=contextPath %>">HOME</a></div>
+        <div class="menu"><a href="<%=contextPath %>/list.do">공지사항</a></div>
         <div class="menu"><a href="">일반게시판</a></div>
         <div class="menu"><a href="">사진게시판</a></div>
     </div>

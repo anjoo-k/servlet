@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Member {
 	
 	private int userNo;
-	private String userID;
+	private String userId;
 	private String userPwd;
 	private String userName;
 	private String phone;
@@ -24,11 +24,11 @@ public class Member {
 
 
 
-	public Member(int userNo, String userID, String userPwd, String userName, String phone, String email,
+	public Member(int userNo, String userId, String userPwd, String userName, String phone, String email,
 			String address, String interest, Date enrollDate, Date modifyDate, String status) {
 		super();
 		this.userNo = userNo;
-		this.userID = userID;
+		this.userId = userId;
 		this.userPwd = userPwd;
 		this.userName = userName;
 		this.phone = phone;
@@ -42,11 +42,24 @@ public class Member {
 	
 
 
-	public Member(String userID, String userPwd, String userName, String phone, String email, String address,
+	public Member(String userId, String userPwd, String userName, String phone, String email, String address,
 			String interest) {
 		super();
-		this.userID = userID;
+		this.userId = userId;
 		this.userPwd = userPwd;
+		this.userName = userName;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.interest = interest;
+	}
+
+	
+
+
+	public Member(String userId, String userName, String phone, String email, String address, String interest) {
+		super();
+		this.userId = userId;
 		this.userName = userName;
 		this.phone = phone;
 		this.email = email;
@@ -68,14 +81,14 @@ public class Member {
 
 
 
-	public String getUserID() {
-		return userID;
+	public String getUserId() {
+		return userId;
 	}
 
 
 
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 
@@ -190,7 +203,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [userNo=" + userNo + ", userID=" + userID + ", userPwd=" + userPwd + ", userName=" + userName
+		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
 				+ ", phone=" + phone + ", email=" + email + ", address=" + address + ", interest=" + interest
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}

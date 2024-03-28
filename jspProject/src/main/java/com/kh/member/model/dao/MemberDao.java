@@ -19,7 +19,7 @@ public class MemberDao {
 	private Properties prop = new Properties();
 	
 	public MemberDao() {
-		String filePath = MemberDao.class.getResource("/db/sql/Member-mapper.xml").getPath();
+		String filePath = MemberDao.class.getResource("/db/sql/member-mapper.xml").getPath();
 		try {
 			prop.loadFromXML(new FileInputStream(filePath));
 		} catch (InvalidPropertiesFormatException e) {
@@ -84,7 +84,7 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, m.getUserID());
+			pstmt.setString(1, m.getUserId());
 			pstmt.setString(2, m.getUserPwd());
 			pstmt.setString(3, m.getUserName());
 			pstmt.setString(4, m.getPhone());
@@ -102,6 +102,104 @@ public class MemberDao {
 		
 		return result;
 
+	}
+	
+	public int updateMember(Connection conn, Member m) {
+		//update => 처리된 행 수 => 트랜잭션 처리
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); //미완성된 sql
+			
+			pstmt.setString(1, m.getUserName());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getInterest());
+			pstmt.setString(6, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Member selectMember(Connection conn, String userId) {
+		// userId로 select한걸 날림
+		// select -> resultSet에는 한행이 돌아올 것(userId 하나 날렸으니까) -> Member 객체 담아서
+		
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMember");
+
+		
+		try {
+			pstmt = conn.prepareStatement(sql); // 미완성 sql -> Member-mapper.xml로 보내
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(
+						rset.getInt("user_no"),
+						rset.getString("user_id"),
+						rset.getString("user_pwd"),
+						rset.getString("user_name"),
+						rset.getString("phone"),
+						rset.getString("email"),
+						rset.getString("address"),
+						rset.getString("interest"),
+						rset.getDate("enroll_date"),
+						rset.getDate("modify_date"),
+						rset.getString("status")
+						);
+				
+
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+
+	public int updatePwdMember(Connection conn, String userId, String userPwd, String updatePwd) {
+		// update => 처리된 행 수 => 트랜잭션
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updatePwdMember");		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, updatePwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userPwd);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
