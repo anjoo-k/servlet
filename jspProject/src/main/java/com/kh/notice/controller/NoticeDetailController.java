@@ -1,7 +1,6 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +12,16 @@ import com.kh.notice.model.vo.Notice;
 import com.kh.notice.service.NoticeService;
 
 /**
- * Servlet implementation class NoticeListController
+ * Servlet implementation class NoticeDetailController
  */
-@WebServlet("/list.no")
-public class NoticeListController extends HttpServlet {
+@WebServlet("/detail.no")
+public class NoticeDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListController() {
+    public NoticeDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,12 +31,20 @@ public class NoticeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<Notice> list = new NoticeService().selectNoticeList();
-
+		int noticeNo = Integer.parseInt(request.getParameter("num"));
 		
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
+		// 조회수 1 증가 + 노티스 객체 조회(내용도 읽어오기)
+		Notice n = new NoticeService().increaseCount(noticeNo);
 		
+		
+		
+		if( n != null) { // 성공 -> 조회가능한 공지사항이 있다
+			request.setAttribute("notice", n);
+			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
+		} else { // 실패
+			request.setAttribute("errorMsg", "공지사항 조회에 실패하였습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 		
 	}
 

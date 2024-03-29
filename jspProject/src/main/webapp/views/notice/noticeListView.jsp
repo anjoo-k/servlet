@@ -23,6 +23,10 @@
         border: 1px solid white;
         text-align: center;
     }
+    .list-area>tbody>tr:hover{
+        background: gray;
+        cursor: pointer;
+    }
     
 </style>
 </head>
@@ -36,7 +40,7 @@
 
         <% if(loginUser != null && loginUser.getUserId().equals("admin")) { %>
             <div align="right" style="width:850px; margin-bottom: 4px;">
-                <a href="" class="btn-sm btn-secondary">글쓰기</a>
+                <a href="<%=contextPath %>/enroll.no" class="btn-sm btn-secondary">글쓰기</a>
             </div>
         
         <% } %>
@@ -68,14 +72,41 @@
                     </tr>
                 <% } %>
 
-
-
-
-
             </tbody>
         </table>
 
     </div>
+    <script>
+        // const trList = document.querySelectorAll(".list-area > tbody > tr");
+        // // [tr, tr,tr...]
+        // for(const tr of trList){
+        //     tr.onclick = function(ev){
+        //         //url /kh/detail.no
+
+        //         // onclick을 실행하는 요소가 this
+        //         const noticeNo = this.childNodes[1].innerText;
+        //         // .value는 input에만 쓰는 것
+        //         // children쓰면 빈칸(띄워쓰기, 엔터 등) text들이 걸려져 나온다. 그래서 1로 시작
+        //         // childNodes는 빈칸까지 배열칸 하나하나를 채운다.
+        //         location.href = "<%=contextPath%>/detail.no?num=" + noticeNo;
+        //         // 키값 ? url
+        //     }
+        // }
+
+        // 제이쿼리 방식
+
+        $(function(){
+            $(".list-area > tbody > tr").click(function(){
+                const noticeNo = $(this).children().eq(0).text();
+                location.href = "<%=contextPath%>/detail.no?num=" + noticeNo;
+
+                // num은 키값. name처럼 넘겨주는. 자바에서 받아줌
+            })
+        })
+        // 제이쿼리가 무조건 함수..?
+        // 스크립트, 제이쿼리 둘 다 알면 좋지만 스크립트부터 공부 ㄱ
+
+    </script>
 
 
 
