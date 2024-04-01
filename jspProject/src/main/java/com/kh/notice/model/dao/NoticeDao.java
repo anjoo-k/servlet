@@ -158,4 +158,64 @@ public class NoticeDao {
 		
 		return n;		
 	}
+	
+	
+	public int updateNotice(Connection conn, Notice n){
+		// update문 => 처리된 행 수 => 트랜잭션 처리 해야
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getNoticeNo());
+			
+			result = pstmt.executeUpdate();
+			// excuteUpdate : insert, update, delete
+			// excuteQuery : select
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public int deleteNotice(Connection conn, int noticeNo){
+		// update문 => 처리된 행 수 => 트랜잭션 처리 해야
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			// excuteUpdate : insert, update, delete
+			// excuteQuery : select
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
 }

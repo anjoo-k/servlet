@@ -67,6 +67,15 @@ public class Member {
 		this.interest = interest;
 	}
 
+	
+
+
+	public Member(String userId, String userPwd) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+	}
+
 
 
 	public int getUserNo() {

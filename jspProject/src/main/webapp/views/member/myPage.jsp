@@ -102,8 +102,8 @@
 
             <div align="center">
                 <button type="submit" class="btn btn-sm btn-secondary">정보변경</button>
-                <button class="btn btn-sm" data-toggle="modal" data-target="#update-password-modal">비밀변호변경</button>
-                <button class="btn btn-sm btn-danger">회원탈퇴</button>
+                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#update-pwd-modal">비밀변호변경</button>
+                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal">회원탈퇴</button>
             </div>
         </form>
     </div>
@@ -113,6 +113,7 @@
             const userPwdCheck = document.querySelector("#enroll-form input[name=userPwdCheck]").value;
 
             if(userPwd !== userPwdCheck){
+            	
                 alert("비밀번호가 일치하지 않습니다.")
                 return false;
             }
@@ -123,8 +124,7 @@
     
 
 	
-	
-    <!-- 비밀번호 변경 Modal -->
+	<!-- 비밀번호 변경 modal-->
 	<div class="modal" id="update-pwd-modal">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -136,9 +136,9 @@
 	      </div>
 	
 	      <!-- Modal body -->
-	      <div class="modal-body">
+	      <div class="modal-body" align="center">
 	        <form action="<%=contextPath%>/updatePwd.me" method="POST">
-                <input type="hidden" name="userId" value="<%=userId%>">
+                <input type="hidden" name="userId" value="<%=userId%>" >
                 <table>
                     <tr>
                         <td>현재 비밀번호</td>
@@ -154,29 +154,59 @@
                     </tr>
                 </table>
                 <br>
-                <button id="edit-pwd-btn" type="submit" class="btn btn-sm btn-secondary">비밀번호 변경</button>
-
+                <button id="edit-pwd-btn" type="submit" class="btn btn-sm btn-secondary">
+                    비밀번호 변경
+                </button>
             </form>
-
-          <script>
-            document.getElementById("edit-pwd-btn").onclick = function() {
-                const updatePwd = document.querySelector("input[name=updatePwd]").value;
-                const checkPwd = document.querySelector("input[name=checkPwd]").value;
-
-                if(updatePwd != checkPwd){
-                    alert("비밀번호를 확인해주세요.")
-                    return flase;
-                }
-
-
-                // if($("input[name=updatePwd]").val() !== $("input[name=checkPwd]").val()){
+            <script>
+                document.getElementById("edit-pwd-btn").onclick = function(){
+                    const updatePwd = document.querySelector("input[name=updatePwd]").value;
+                    const checkPwd = document.querySelector("input[name=checkPwd]").value;
+                    
+                    if(updatePwd !== checkPwd) {
+                        alert("비밀번호를 확인해주세요.");
+                        return false;
+                    }
+                  
+                	
+	            // if($("input[name=updatePwd]").val() !== $("input[name=checkPwd]").val()){
                 //    제이쿼리로 가져오기
                 // }
-
-            }
-          </script>
+	
+                }
+            </script>
+	      </div>
 	
 	     
+	    </div>
+	  </div>
+	</div>
+
+	
+	
+	    <!-- 회원탈퇴 Modal -->
+	<div class="modal" id="delete-modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">회원탈퇴</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+            <form action="<%=contextPath%>/delete.me" method="POST">
+                <b>탈퇴 후 복구가 불가능합니다.<br>
+                   정말로 탈퇴하시겠습니까?</b>
+                <br><br>
+                <input type="hidden" name="userId" value="<%=userId%>">
+                비밀번호 : <input type="password" name="userPwd" required>
+                <br><br>
+                <button type="submit" class="btn btn-sm btn-danger">탈퇴하기</button>
+            </form>
+	    
 		      </div>
 	    </div>
 	  </div>

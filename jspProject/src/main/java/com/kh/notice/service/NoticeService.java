@@ -48,6 +48,7 @@ public class NoticeService {
 		if(result > 0) {
 			commit(conn);
 			n = new NoticeDao().selectNotice(conn, noticeNo);
+//			조회수 1 올라갔으니까, 올라간 조회수 1을 커밋 해주고 다시 db에서 가져와
 
 		} else {
 			rollback(conn);
@@ -56,6 +57,46 @@ public class NoticeService {
 		close(conn);
 		return n;
 	}
+	
+	public Notice selectNotice(int noticeNo) {
+		Connection conn = getConnection();
+		Notice n = new NoticeDao().selectNotice(conn, noticeNo);	
+		close(conn);
+		return n;
+	}
+	
+	public int updateNotice(Notice n) {
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().updateNotice(conn, n);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int deleteNotice(int noticeNo) {
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().deleteNotice(conn, noticeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
 
 
 }

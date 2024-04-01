@@ -101,6 +101,7 @@
                 location.href = "<%=contextPath%>/detail.no?num=" + noticeNo;
 
                 // num은 키값. name처럼 넘겨주는. 자바에서 받아줌
+                // 제이쿼리는 eq로 받아온다
             })
         })
         // 제이쿼리가 무조건 함수..?

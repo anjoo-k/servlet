@@ -66,6 +66,8 @@ public class MemberUpdateController extends HttpServlet {
 			session.setAttribute("loginUser", updateMem);
 			session.setAttribute("alertMsg", "성공적으로 수정하였습니다.");
 			
+			// 아니 왜 비번변경이되냐
+			
 			// 메인으로 보내도 상관없고 myPage로 가서 수정된 것이 보이도록 해보자
 			// url 재요청 => 마이페이지 재요청(/kh/myPage.me)
 			response.sendRedirect(request.getContextPath() + "/myPage.me");
