@@ -34,6 +34,7 @@
         <br>
 
         <form action="<%=contextPath %>/insert.no" id="enroll-form" method="POST">
+        <input type="hidden" name="userNo" vlaue="<%=loginUser.getUserno() %>">
             <table>
                 <tr>
                     <th width="50">제목</th>

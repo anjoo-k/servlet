@@ -30,7 +30,31 @@ public class Board {
 		this.status = status;
 	}
 	
+
+
+	public Board(int boardNo, String boardCategoryNo, String boardTitle, String boardWriter, int count,
+			String createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.boardCategoryNo = boardCategoryNo;
+		this.boardTitle = boardTitle;
+		this.boardWriter = boardWriter;
+		this.count = count;
+		this.createDate = createDate;
+	}
 	
+	
+
+	public Board(int boardNo, String boardCategoryNo, String boardTitle, String boardContent, String boardWriter,
+			String createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.boardCategoryNo = boardCategoryNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
+		this.createDate = createDate;
+	}
 
 	public int getBoardNo() {
 		return boardNo;
