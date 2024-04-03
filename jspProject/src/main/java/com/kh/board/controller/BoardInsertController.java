@@ -36,6 +36,15 @@ public class BoardInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		 * 파일업로드
+		 * 내가 원하는 방법대로 바꿔서 파일 업로드 폴더로 넣어줌
+		 * 그리고 다시 바꿔서 업로드
+		 * 
+		 * */
+		
+		
+		
 //		request.setCharacterEncoding("UTF-8");
 //		
 //		// 일반 방식이 아닌 multipart/form-data로 전송하는 경우 request로부터 값 추출이 불가
@@ -53,11 +62,11 @@ public class BoardInsertController extends HttpServlet {
 			int maxSize = 1024* 1024 * 10; // 10메가
 			
 			// 1_2) 전달된 파일을 저장시킬 폴더 경로 알아내기
-			//.getServletContext() : 내가 실행하고 있는 servletContext 가져와 달라, 절대경로 wepapp
+			//.getServletContext() : 내가 실행하고 있는 servletContext 가져와 달라, 절대경로 webapp
 			// Context가 내가 실행 중인 것
 			//.getRealPath("adfasdf") : 실제경로
 			// /이게 루트 디렉토리 가져오는 것
-			String savePath = request.getSession().getServletContext().getRealPath("/resource/board_upfile/");
+			String savePath = request.getSession().getServletContext().getRealPath("/resources/board_upfile/");
 			
 			/*
 			 * 2. 전달된 파일의 파일명 수정 및 서버에 업로드 작업
@@ -106,7 +115,7 @@ public class BoardInsertController extends HttpServlet {
 				at = new Attachment();
 				at.setOriginName(multiRequest.getOriginalFileName("upfile"));
 				at.setChangeName(multiRequest.getFilesystemName("upfile"));
-				at.setFilePath("resource/board_upfile/");
+				at.setFilePath("resources/board_upfile/");
 			}
 			
 			

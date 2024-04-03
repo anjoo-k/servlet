@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.kh.board.model.vo.Board" %>
+<%@page import="com.kh.board.model.vo.Board, com.kh.board.model.vo.Attachment" %>
 <%
 	Board b = (Board)request.getAttribute("board");
-// 글번호, 카테고리명, 제목, 내용, 작성자, 작성일 in
+	// 글번호, 카테고리명, 제목, 내용, 작성자, 작성일 in
+	Attachment at = (Attachment)request.getAttribute("Attachment");
+	// 없을 수도 있다. null
+	// 있다면 파일번호, 원본명, 수정명, 저장경로
+
 %>
 
 <!DOCTYPE html>
@@ -63,11 +67,13 @@
             <tr>
                 <th>첨부파일</th>
                 <td colspan="3">
-                    <!-- case1 첨부파일 없을 때
-                    첨부파일이 없습니다. -->
-                    <!-- case2 첨부파일이 있을 때 -->
-                    <a download="첨부파일1" href="https://i1.ruliweb.com/ori/20/09/01/17447a1911b526e8b.jpg">
-                    file20230401</a>
+                    <!-- case1 첨부파일 없을 때 -->
+                    <%if(at == null) { %>
+                     첨부파일이 없습니다.
+                    <%} else { %>
+                    <!-- case2 첨부파일이 있을 때 8001/kh/resources/board_upfile/2024040216463732965.jpg-->
+                     <a download="<%=at.getOriginName() %>" href="<%=contextPath%>/<%=at.getFilePath() + at.getChangeName()%>"><%=at.getOriginName() %></a>
+                	<%} %>
                 </td>
             </tr>
 
@@ -77,8 +83,8 @@
             <a href="<%=contextPath %>/list.bo?cpage=1" class="btn btn-sm btn-secondary">목록가기</a>
             <!-- css로 만든 버튼모양. 버튼모양이 나온다. -->
             <%if(loginUser != null && loginUser.getUserId().equals(b.getBoardWriter())) { %>
-            <a href="" class="btn btn-sm btn-warning">수정하기</a>
-            <a href="" class="btn btn-sm btn-danger">삭제하기</a>
+            <a href="<%=contextPath %>/updateForm.bo?bno=<%=b.getBoardNo() %>" class="btn btn-sm btn-warning">수정하기</a>
+            <a href="<%=contextPath %>/delete.bo?bno=<%=b.getBoardNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
             <% } %>
         </div>
 
