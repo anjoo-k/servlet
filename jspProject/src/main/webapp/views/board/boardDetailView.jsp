@@ -20,13 +20,15 @@
        background: rgb(77, 102, 82);
        color: rgb(226, 219, 158);
        width: 1000px;
-       height: 500px;
+       height: 700px;
        margin: auto;
        margin-top: 50px;
+       padding-bottom: 24px;
    }
    .outer table {
        border: 1px solid white;
        border-collapse: collapse;
+       margin: auto;
        /* 보더 두줄로 나오는거 합치기 */
    }
    .outer > table tr, .outer > table td {
@@ -88,8 +90,102 @@
             <% } %>
         </div>
 
+        <br>
+        <div id="reply-area">
+            <table>
+                <thead>
+                    <tr>
+                        <th>댓글작성</th>
+                        <%if(loginUser != null) { %>
+                        <td>
+                            <textarea id="reply-content" cols="50" rows="3" style="resize: none;"></textarea>
+                        </td>
+                        <td>
+                            <button onclick="insertReply()">댓글등록</button>
+                        </td>
+                        <%} else { %>
+                            <td>
+                                <textarea id="reply-content" cols="50" rows="3" style="resize: none;" readonly></textarea>
+                            </td>
+                            <td>
+                                <button disabled>댓글등록</button>
+                            </td>
+                        <% } %>
+                    </tr>
+                </thead>
 
+                <tbody>
+
+                    <!-- <tr>
+                        <td>king</td>
+                        <td>댓글남깁니다.</td>
+                        <td>2024/03/05</td>
+
+                    </tr>                  -->
+
+
+                </tbody>
+                
+            </table>
+            
+            
+            
+            
+            
+            <script>
+                  function insertReply(){
+                    const boardNo = <%=b.getBoardNo()%>;
+                    const content = document.querySelector("#reply-content").value;
+
+                    $.ajax({
+                        url : "rinsert.bo",
+                        data : {
+                            bno : boardNo,
+                            content : content
+                        },
+                        type : "POST",
+                        success : function(res){
+                            console.log(res)
+                        },
+                        error : function(){
+                            console.log("댓글 작성중 ajax 통신 실패")
+                        }
+                    })
+                }
+
+                window.onload = function(){
+                    $.ajax({
+                        url : "rlist.bo",
+                        data : {
+                            bno : <%=b.getBoardNo()%>
+                        },
+                        success: function(res){
+                        
+                            let str = "";
+                            for(let reply of result){
+                                str += ("<tr>" +
+                                     "<td>" + reply.replyWriter + "</td>" +
+                                     "<td>" + reply.replyContent + "</td>" +
+                                     "<td>" + reply.createDate + "</td>" +
+                                     "</tr>")
+
+                        }
+
+                        document.querySelector("#reply-area tbody").innerHTML = str;
+
+                        },
+                        error: function(){
+                            console.log("댓글 조회 중 ajax 통신 실패")
+                        }    
+                    })
+
+    
+                }
+
+
+              
+            </script>
+        </div>
     </div>
-
 </body>
 </html>

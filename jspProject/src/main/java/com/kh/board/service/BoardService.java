@@ -13,6 +13,7 @@ import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 import com.kh.board.model.vo.Category;
 import com.kh.common.vo.PageInfo;
+import com.kh.common.vo.Reply;
 
 public class BoardService {
 	
@@ -127,6 +128,61 @@ public class BoardService {
 
 		return result1 * result2;
 	
+	}
+	
+	public int insertThumbnailBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		
+		int result1 = new BoardDao().insertThumbnailBoard(conn, b);
+		int result2 = new BoardDao().insertAttachmentList(conn, list);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+	}
+	
+	public ArrayList<Board> selectThumbnailList(){
+		Connection conn = getConnection();
+		ArrayList<Board> list = new BoardDao().selectThumbnailList(conn);
+		close(conn);
+		
+		return list;		
+	}
+	
+	public ArrayList<Attachment> selectAttachmentList(int boardNo){
+		
+		Connection conn = getConnection();
+		ArrayList<Attachment> list = new BoardDao().selectThumbnailAttachmentList(conn, boardNo);
+		close(conn);
+		
+		return list;		
+	}
+	
+	public int insertReply(Reply r) {
+		Connection conn = getConnection();
+		int result = new BoardDao().insertReply(conn, r);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		return result;
+	}
+	
+	public ArrayList<Reply> selectReplyList(int boardNo){
+		
+		Connection conn = getConnection();
+		ArrayList<Reply> list = new BoardDao().selectReplyList(conn, boardNo);
+		close(conn);
+		return list;
+		
 	}
 	
 
