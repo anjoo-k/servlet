@@ -102,7 +102,7 @@
     <% } else {%>
     <!-- 로그인 후 -->
     <div>
-        <b> <%=loginUser.getUserName()%>님</b>의 방문을 환역합니다<br>
+        <b> <%=loginUser.getUserName()%>님</b>의 방문을 환영합니다<br>
         <div align="center">
             <a href="<%=contextPath%>/myPage.me">마이페이지</a>
             <a href="<%=contextPath%>/logout.me">로그아웃</a>
