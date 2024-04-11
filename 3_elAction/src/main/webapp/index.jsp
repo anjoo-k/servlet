@@ -39,15 +39,42 @@
 		      가장 대표적이고 유용한 라이브러리 jstl
 	 -->
 	 
-
+	 
 	 <h3>* 표준액션태그(Standard Action Tag)</h3>
 	 <a href="views/02_Standard_Action_tag/01_include.jsp">01_jsp:include</a>
 	 <a href="views/02_Standard_Action_tag/02_forward.jsp">02_jsp:forward</a>
 	 
+	 
+	 <h1>JSTL이란?</h1>
+	 <p>
+	 	JSP에서 사용되는 커스텀액션태그로 <br>
+	 	자주 사용되는 코드를 집합해 보다 쉽게 사용할 수 있도록 태그화하여 표준으로 제공하는 라이브러리
+	 </p>
+	 
+	 <h3>라이브러리 추가 필요</h3>
+	 1) 톰캣 사이트 접속 <br>
+	 2) 메뉴바 Taglib 메뉴 접속 <br>
+	 3) 4개의 라이브러리 전부 다운로드 <br>
+	 4) WEB-INF/lib/()추가 <br>
+	 
+	 <h3>JSTL 선언 방법</h3>
+	 <p>
+	 	JSTL을 사용하고자하는 해당 jsp 페이지 상단에 <br>
+	 	taglib 지시어를 사용해서 선언 <br><br>
+	 	
+	 	&lt;%@ taglib prefix="접두어" uri="라이브러리 파일상의 uri 주소" %&gt;
+	 </p>
+	 
 	 	 
 	 <h3>* Custom Action Tag</h3>
+	 <h4>1. JSTL Core Library</h4>
+	 <p>변수와 조건문, 반복문 등 로직과 관련된 문법을 제공한다.</p>
 	 <a href="views/03_Custom_Action_tag/01_core.jsp">02_jsp:forward</a>
 	 
+	 
+	 <h4>2. JSTL Formatting Library</h4>
+	 <p>숫자, 날짜 및 시간 데이터의 출력 형식을 지정할 때 사용하는 문법을 제공</p>
+	 <a herf="views/03_Custom_Action_tag/02_fmt.jsp">fmt library</a>
 	 
 
 </body>
