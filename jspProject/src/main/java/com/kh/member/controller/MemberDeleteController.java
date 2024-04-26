@@ -50,7 +50,7 @@ public class MemberDeleteController extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			
 		} else {
-			// 실패 시 -> session에 alerMsg로 회원탈퇴 실패 주고
+			// 실패 시 -> session에 alertMsg로 회원탈퇴 실패 주고
 			// kh/myPage.me로 이동
 			
 			session.setAttribute("alertMsg", "회원탈퇴 실패");
@@ -64,7 +64,7 @@ public class MemberDeleteController extends HttpServlet {
 		 * 정보변경, 비밀번호 변경 -> 데이터를 데이터베이스로 다시 가져와 넣어주기
 		 * 
 		 * 탈퇴 성공 시 => 마이페이지 alert(성공했다.)
-		 * 				단, 로으아웃 처리해야(session에 loginUser라는 키값에 데이터가 없어야한다)
+		 * 				단, 로그아웃 처리해야(session에 loginUser라는 키값에 데이터가 없어야한다)
 		 * 실패 시 => 마이페이지 alert(회원탈퇴 실패)
 		 */
 

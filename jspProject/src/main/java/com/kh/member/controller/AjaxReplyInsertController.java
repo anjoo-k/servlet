@@ -45,15 +45,7 @@ public class AjaxReplyInsertController extends HttpServlet {
 		
 		int result = new BoardService().insertReply(r);
 		
-		if(result > 0) {
-			response.getWriter().print(result);
-			
-			
-			
-		} else {
-			
-		}
-		
+		response.getWriter().print(result);
 	}
 
 	/**

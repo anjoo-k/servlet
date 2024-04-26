@@ -133,7 +133,39 @@
             
             
             <script>
-                  function insertReply(){
+                window.onload = function(){
+                    selectReplyList();
+                    setInterval(selectReplyList, 2000);
+
+                }
+
+                function selectReplyList(){
+                    $.ajax({
+                        url: "rlist.bo",
+                        data : {
+                            bno: <%=b.getBoardNo()%>
+                        },
+                        success: function(res){
+
+                            let str = "";
+                            for(let reply of res){
+                                str += ("<tr>"+
+                                        "<td>" + reply.replyWriter + "</td>" +
+                                        "<td>" + reply.replyContent + "</td>" +
+                                        "<td>" + reply.createDate + "</td>" +
+                                        "</tr>")
+                            }
+
+                            document.querySelector("#reply-area tbody").innerHTML = str;
+
+                        }, 
+                        error: function(){
+                            console.log("댓글 조회중 ajax통신 실패")
+                        }
+                    })
+                }
+
+                function insertReply(){
                     const boardNo = <%=b.getBoardNo()%>;
                     const content = document.querySelector("#reply-content").value;
 
@@ -145,45 +177,14 @@
                         },
                         type : "POST",
                         success : function(res){
-                            console.log(res)
-                        },
+                            document.querySelector("#reply-content").value = "";
+                            selectReplyList();
+                        }, 
                         error : function(){
-                            console.log("댓글 작성중 ajax 통신 실패")
+                            console.log("댓글 작성중 ajax통신 실패")
                         }
                     })
                 }
-
-                window.onload = function(){
-                    $.ajax({
-                        url : "rlist.bo",
-                        data : {
-                            bno : <%=b.getBoardNo()%>
-                        },
-                        success: function(res){
-                        
-                            let str = "";
-                            for(let reply of result){
-                                str += ("<tr>" +
-                                     "<td>" + reply.replyWriter + "</td>" +
-                                     "<td>" + reply.replyContent + "</td>" +
-                                     "<td>" + reply.createDate + "</td>" +
-                                     "</tr>")
-
-                        }
-
-                        document.querySelector("#reply-area tbody").innerHTML = str;
-
-                        },
-                        error: function(){
-                            console.log("댓글 조회 중 ajax 통신 실패")
-                        }    
-                    })
-
-    
-                }
-
-
-              
             </script>
         </div>
     </div>
